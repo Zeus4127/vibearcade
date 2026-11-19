@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VibeArcade</title>
+<meta name="description" content="Twelve original games in one arcade, all starring a red 1954 F100 pickup. Play in your browser or install the Android app.">
+<meta name="theme-color" content="#0A0C0B">
+<link rel="icon" href="play/index.icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Barlow:wght@400;500;600&display=swap">
+<style>
+/* Layout: one narrow column; hero with truck, then two play paths (browser / phone), then the games list. */
+:root{
+  --bg:#0A0C0B; --bg2:#0E1511; --panel:#121714; --line:#23302A;
+  --go:#3CF08A; --amber:#FFB020; --text:#E8EFE9; --muted:#8FA096;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%) fixed;color:var(--text);font:400 17px/1.55 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:980px;margin:0 auto;padding-block:20px 48px}
+a{color:inherit}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.brand{font:800 26px/1 var(--display);letter-spacing:.06em;text-transform:uppercase}
+.brand span{color:var(--go)}
+nav{display:flex;gap:18px;font-weight:600;font-size:15px;color:var(--muted)}
+nav a{text-decoration:none}
+nav a:hover,nav a:focus-visible{color:var(--text)}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center;padding-block:34px 26px}
+.hero h1{font:800 clamp(40px,7vw,68px)/.95 var(--display);text-transform:uppercase;letter-spacing:.01em;margin:0 0 14px;text-wrap:balance}
+.hero p{color:var(--muted);margin:0 0 22px;max-width:46ch}
+.hero img{width:100%;height:auto;filter:drop-shadow(0 18px 24px rgba(0,0,0,.6))}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border-radius:8px;font:800 20px/1 var(--display);letter-spacing:.06em;text-transform:uppercase;text-decoration:none;border:2px solid var(--line);background:var(--panel)}
+.btn.go{background:var(--go);border-color:var(--go);color:#06120B}
+.btn:hover{border-color:var(--go)}
+.btn.go:hover{filter:brightness(1.08)}
+.btn:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+.facts{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:20px;font-size:14px;color:var(--muted)}
+.facts b{color:var(--amber);font-variant-numeric:tabular-nums}
+h2{font:800 30px/1 var(--display);text-transform:uppercase;letter-spacing:.04em;margin:0 0 6px}
+section{padding-block:26px;border-top:1px solid var(--line)}
+.sub{color:var(--muted);margin:0 0 18px}
+.paths{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.path{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px}
+.path h3{font:800 22px/1.1 var(--display);text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px}
+.path p,.path ol{margin:0 0 14px;color:var(--muted);font-size:15px}
+.path ol{padding-left:20px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.chip{border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:14px;font-weight:600;color:var(--muted);background:none;cursor:pointer;font-family:inherit}
+.chip[aria-pressed="true"]{border-color:var(--go);color:var(--go)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.game{display:flex;flex-direction:column;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;text-decoration:none;min-width:0}
+.game:hover,.game:focus-visible{border-color:var(--go);outline:none}
+.tag{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--go)}
+.game strong{font:800 22px/1.1 var(--display);text-transform:uppercase;letter-spacing:.03em}
+.game span.g{color:var(--muted);font-size:15px}
+.game span.how{color:var(--amber);font-size:13px;font-weight:600;margin-top:4px}
+footer{border-top:1px solid var(--line);padding-top:18px;color:var(--muted);font-size:13px}
+@media (max-width:720px){.hero,.paths{grid-template-columns:1fr}.hero img{max-width:420px;margin:0 auto}nav{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">Vibe<span>Arcade</span></div>
+    <nav><a href="#games">Games</a><a href="#phone">Android app</a></nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1>Twelve games. One red '54 pickup.</h1>
+      <p>Kart combat, artillery, swarm survival, tower defence, a dungeon crawl and more. Every game stars the same 1954 F100, and your stars and best scores carry across the whole arcade.</p>
+      <div class="ctas">
+        <a class="btn go" href="play/">Play now</a>
+        <a class="btn" href="VibeArcade.apk">Get the Android app</a>
+      </div>
+      <div class="facts"><span><b>12</b> games</span><span><b>1</b> shared save</span><span><b>0</b> ads</span><span>Plays offline once installed</span></div>
+    </div>
+    <img src="truck.png" width="480" height="358" alt="The red 1954 F100 pickup that stars in every game">
+  </div>
+
+  <section id="phone">
+    <h2>Two ways to play</h2>
+    <p class="sub">The browser version needs no install. The Android app runs smoother and works with no signal.</p>
+    <div class="paths">
+      <div class="path">
+        <h3>In your browser</h3>
+        <p>Opens the full arcade menu. Best on a computer or a phone turned sideways. The first load is about 70 MB, then your browser keeps it.</p>
+        <a class="btn go" href="play/">Open the arcade</a>
+      </div>
+      <div class="path">
+        <h3>Android app</h3>
+        <ol>
+          <li>Tap the button below on your phone.</li>
+          <li>Open the downloaded file. If asked, allow installs from your browser.</li>
+          <li>Tap Install. An update installs over the old one and keeps your saves.</li>
+        </ol>
+        <a class="btn" href="VibeArcade.apk">Download APK (55 MB)</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="games">
+    <h2>The games</h2>
+    <p class="sub">Tap one to play. The first eight open in the arcade; the last four open as their own page.</p>
+    <div class="chips" role="group" aria-label="Filter games">
+      <button class="chip" id="f-all" aria-pressed="true" data-f="all">All</button>
+      <button class="chip" id="f-racing" aria-pressed="false" data-f="Racing">Racing</button>
+      <button class="chip" id="f-action" aria-pressed="false" data-f="Action">Action</button>
+      <button class="chip" id="f-strategy" aria-pressed="false" data-f="Strategy">Strategy</button>
+      <button class="chip" id="f-other" aria-pressed="false" data-f="Other">Other</button>
+    </div>
+    <div class="grid" id="grid">
+      <a class="game" data-c="Racing" href="play/"><span class="tag">Racing</span><strong>TurboClash</strong><span class="g">Full-contact kart racing against a pack of muscle cars.</span><span class="how">In the arcade</span></a>
+      <a class="game" data-c="Strategy" href="play/"><span class="tag">Strategy</span><strong>Rod Wars</strong><span class="g">3D artillery across ten territories held by Raiders.</span><span class="how">In the arcade</span></a>
+      <a class="game" data-c="Action" href="play/"><span class="tag">Action</span><strong>Hive Breach: Swarm</strong><span class="g">Drive into an alien infestation. Your guns fire on their own.</span><span class="how">In the arcade</span></a>
+      <a class="game" data-c="Action" href="play/"><span class="tag">Action</span><strong>Ashline: Overdrive</strong><span class="g">Run and gun through a broken world and four war machines.</span><span class="how">In the arcade</span></a>
+      <a class="game" data-c="Strategy" href="play/"><span class="tag">Strategy</span><strong>Bastion</strong><span class="g">Nine weapons against the Blight across six sectors and six warlords.</span><span class="how">In the arcade</span></a>
+      <a class="game" data-c="Action" href="play/"><span class="tag">Action</span><strong>Void Courier</strong><span class="g">Run contraband through hostile space in a new ship every level.</span><span class="how">In the arcade</span></a>
+      <a class="game" data-c="Strategy" href="play/"><span class="tag">Strategy</span><strong>The Depths</strong><span class="g">Turn-based dungeon runs. Loot relics and get the gold out alive.</span><span class="how">In the arcade</span></a>
+      <a class="game" data-c="Other" href="play/"><span class="tag">Other</span><strong>Prism Vault</strong><span class="g">Bend light with mirrors, splitters and portals. 32 chambers plus a daily puzzle.</span><span class="how">In the arcade</span></a>
+      <a class="game" data-c="Action" href="play/games/backroads.html"><span class="tag">Action</span><strong>Backroads</strong><span class="g">A big 3D backcountry with relic chests, bandits and the undead after dark.</span><span class="how">Own page</span></a>
+      <a class="game" data-c="Action" href="play/games/lastisle.html"><span class="tag">Action</span><strong>Last Island</strong><span class="g">An island city. Steal cars, run jobs and keep the police off your back.</span><span class="how">Own page</span></a>
+      <a class="game" data-c="Strategy" href="play/games/epochs.html"><span class="tag">Strategy</span><strong>Epochs of Conquest</strong><span class="g">Build a base, raise an army and push from the Industrial Age into the future.</span><span class="how">Own page</span></a>
+      <a class="game" data-c="Action" href="play/games/hivestation.html"><span class="tag">Action</span><strong>Hive Breach: Station</strong><span class="g">On foot in an overrun station. Hold out five minutes, then kill the Broodmother.</span><span class="how">Own page</span></a>
+    </div>
+  </section>
+
+  <footer>VibeArcade · original games · free, no ads, no sign-in.</footer>
+</div>
+<script>
+(function(){
+  var chips=document.querySelectorAll('.chip'),games=document.querySelectorAll('.game');
+  chips.forEach(function(c){c.addEventListener('click',function(){
+    chips.forEach(function(o){o.setAttribute('aria-pressed',o===c?'true':'false')});
+    var f=c.getAttribute('data-f');
+    games.forEach(function(g){g.hidden=!(f==='all'||g.getAttribute('data-c')===f)});
+  })});
+})();
+</script>
+</body>
+</html>
